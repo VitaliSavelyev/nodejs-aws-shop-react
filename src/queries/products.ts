@@ -26,7 +26,7 @@ export function useInvalidateAvailableProducts() {
 
 export function useAvailableProduct(id?: string) {
   return useQuery<AvailableProduct, AxiosError>(
-    ["products", { id }],
+    ["product", { id }],
     async () => {
       const res = await axios.get<AvailableProduct>(
         `${API_PATHS.product}/products/${id}`
@@ -41,14 +41,14 @@ export function useRemoveProductCache() {
   const queryClient = useQueryClient();
   return React.useCallback(
     (id?: string) =>
-      queryClient.removeQueries(["products", { id }], { exact: true }),
+      queryClient.removeQueries(["product", { id }], { exact: true }),
     []
   );
 }
 
 export function useUpsertAvailableProduct() {
   return useMutation((values: AvailableProduct) =>
-    axios.put<AvailableProduct>(`${API_PATHS.bff}/products`, values, {
+    axios.put<AvailableProduct>(`${API_PATHS.bff}/product`, values, {
       headers: {
         Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
       },
